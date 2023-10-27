@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        //bool temp = false;
+        //sort(nums.begin(),nums.end());
+        //for(int i=0;i<nums.size();i++) cout<<nums[i]<< " ";
+        unordered_map<int,int> mp;
+        for(int i:nums){
+           mp[i]++;
+           //cout<<mp[i]<<"\n";
+            if(mp[i]>1)  return true;
+        }
+        //cout<<temp<<"\n";
+        return false;
+    }
+};
