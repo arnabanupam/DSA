@@ -1,0 +1,48 @@
+--- Problem Statement ---
+Given an array of integers arr, return true if we can partition the array into three non-empty parts with equal sums.
+Formally, we can partition the array if we can find indexes i + 1 < j with 
+(arr[0] + arr[1] + ... + arr[i] == arr[i + 1] + arr[i + 2] + ... + arr[j - 1] == arr[j] + arr[j + 1] + ... + arr[arr.length - 1])
+Example 1:
+Input: arr = [0,2,1,-6,6,-7,9,1,2,0,1]
+Output: true
+Explanation: 0 + 2 + 1 = -6 + 6 - 7 + 9 + 1 = 2 + 0 + 1
+Example 2:
+Input: arr = [0,2,1,-6,6,7,9,-1,2,0,1]
+Output: false
+Example 3:
+Input: arr = [3,3,6,5,-2,2,5,1,-9,4]
+Output: true
+Explanation: 3 + 3 = 6 = 5 - 2 + 2 + 5 + 1 - 9 + 4
+Constraints:
+3 <= arr.length <= 5 * 104
+-104 <= arr[i] <= 104
+
+-------------------------------------------------------------------------
+class Solution {
+public:
+    bool canThreePartsEqualSum(vector<int>& arr) {
+        int n = arr.size(),sum=0,currentSum = 0;
+        for(int i : arr)   sum+=i;
+        //cout<<sum<<"\n";
+        if(sum%3 != 0)  return false;
+        int target = sum/3,count=0;
+        for(int i=0;i<n-1;i++){
+            currentSum+=arr[i];
+            if(currentSum == target){
+                count++;
+                currentSum = 0;
+                if(count == 2)  return true;
+            }
+        }
+       return false;
+    }
+};
+
+//Logic
+We start by calculating the total sum of the array. If it is not divisible by 3, we return false immediately. 
+Otherwise, we set the target sum for each part as the total sum divided by 3.
+Next, we iterate through the array and keep a running sum currentSum and a count of parts count with the sum equal to the target. 
+For each number, we add it to currentSum and then check if currentSum is equal to the target. If it is, we reset currentSum to 0 and increment count.
+If count reaches 2 before the end of the array, we return true, as the sum of the remaining part of the array will be equal to the target (because the total sum is divisible by 3).
+Note that we need to stop the loop at the second-to-last element to ensure that there is at least one element left for the third part of the array. 
+This is because the problem requires the array to be divided into three parts.
