@@ -1,0 +1,46 @@
+!--- PROBLEM STATEMENT ---!
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+
+Example 1:
+Input: s = "aba"
+Output: true
+Example 2:
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+Example 3:
+Input: s = "abc"
+Output: false
+
+Constraints:
+1 <= s.length <= 105
+s consists of lowercase English letters.
+--------------------------------------------------------------------
+!--- SOLUTION ---!
+Approach - 
+1. lets say we need to check " a a a z" if by deleting one character we can get a palindrome, we check by 
+Case 1 : Deleting first 'a' and check if its palindrome - 'a a z'
+Case 2 : Deleting last 'z' and check if the remaining is a pal - 'a a a'
+
+class Solution {
+public:
+    bool isPal(string s){
+        for(int i=0;i<s.size()/2;i++){
+            if(s[i]!=s[s.size()-i-1]) return false;
+        }
+        return true;
+    }
+    bool validPalindrome(string s) {
+        cin.tie(0);
+        cout.sync_with_stdio(0);
+        
+        int i = 0;
+        int j = s.size() - 1;
+        while(i<=j){
+            if(s[i]==s[j]){
+                i++; j--;
+            }else return isPal(s.substr(0,i)+s.substr(i+1,j)) || isPal(s.substr(0,j)+s.substr(j+1));
+        }
+        return true;
+    }
+};
